@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lots de production</h2>
+<ul>
+  {% for b in batches %}
+    <li>{{ b.name }} — {{ b.quantity }} unités — {{ b.produced_at }}</li>
+  {% empty %}
+    <li>Aucun lot enregistré.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

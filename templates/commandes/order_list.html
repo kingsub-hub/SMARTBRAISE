@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Commandes</h2>
+<ul>
+  {% for o in orders %}
+    <li><a href="{% url 'commandes:detail' o.pk %}">Commande #{{ o.pk }}</a> — {{ o.client.name }} — {{ o.status }}</li>
+  {% empty %}
+    <li>Aucune commande.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

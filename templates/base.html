@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SMARTBRAISE RDC</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1>SMARTBRAISE RDC</h1>
+      <nav>
+        <a href="/">Tableau de bord</a> |
+        <a href="/clients/">Clients</a> |
+        <a href="/commandes/">Commandes</a> |
+        <a href="/stock/">Stock</a> |
+        <a href="/production/">Production</a> |
+        <a href="/admin/">Admin</a>
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <footer>
+      <p>© SMARTBRAISE RDC</p>
+    </footer>
+  </body>
+ </html>
