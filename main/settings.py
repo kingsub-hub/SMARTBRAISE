@@ -10,9 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path 
+from pathlib import Path
 import os
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-smartbraise-rdc-2025')
+SECRET_KEY = 'django-insecure-smartbraise-rdc-2025'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -45,7 +44,7 @@ INSTALLED_APPS = [
 LOCAL_APPS = [
     'accounts.apps.AccountsConfig',
     'clients.apps.ClientsConfig',
-    'commandes.appsCommandesConfig',
+    'commandes.apps.CommandesConfig',
     'stock.apps.StockConfig',
     'production.apps.ProductionConfig',
 ]
@@ -61,7 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'smartbraise.urls'
+ROOT_URLCONF = 'main.urls'
 
 TEMPLATES = [
     {
@@ -79,7 +78,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'smartbraise.wsgi.application'
+WSGI_APPLICATION = 'main.wsgi.application'
 
 
 # Database
