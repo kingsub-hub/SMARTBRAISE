@@ -147,7 +147,9 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
-LOGOUT_REDIRECT_URL = 'index'
+
+LOGOUT_REDIRECT_URL = "login"
+
 
 # Internationalization
 # Default language set for DR Congo

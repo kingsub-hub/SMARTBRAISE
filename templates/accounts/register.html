@@ -1,9 +1,137 @@
-{% extends 'base.html' %}
+{% extends "accounts/base.html" %}
+
+{% block title %}Inscription{% endblock %}
+{% block body_class %}auth-page{% endblock %}
 
 {% block content %}
-<h2>Inscription</h2>
-<form method="post">{% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">S'inscrire</button>
-</form>
+<div class="auth-container">
+    <div class="card auth-card">
+        <div class="card-body">
+            <div class="auth-logo">
+                <i class="bi bi-person-plus"></i>
+            </div>
+
+            <h2 class="auth-title">Créer un compte</h2>
+            <p class="auth-subtitle">Rejoignez la plateforme en quelques instants</p>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                    <p class="mb-0">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="id_first_name" class="form-label">Prénom *</label>
+                        {{ form.first_name }}
+                        {% for error in form.first_name.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="id_last_name" class="form-label">Nom *</label>
+                        {{ form.last_name }}
+                        {% for error in form.last_name.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_email" class="form-label">Adresse email *</label>
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_role" class="form-label">Rôle</label>
+                    {{ form.role }}
+                    {% for error in form.role.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password" class="form-label">Mot de passe *</label>
+                    {{ form.password }}
+                    <div class="progress mt-2" style="height:4px">
+                        <div id="pwd-strength-bar" class="password-strength bg-danger"
+                             style="width:0%"></div>
+                    </div>
+                    <div id="pwd-strength-text" class="small text-muted"></div>
+                    {% for error in form.password.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password_confirm" class="form-label">
+                        Confirmer le mot de passe *
+                    </label>
+                    {{ form.password_confirm }}
+                    {% for error in form.password_confirm.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3 form-check">
+                    {{ form.accept_terms }}
+                    <label class="form-check-label" for="id_accept_terms">
+                        J'accepte les <a href="#">conditions générales</a>
+                    </label>
+                    {% for error in form.accept_terms.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                    <i class="bi bi-person-plus me-2"></i>Créer mon compte
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <span class="text-muted">Déjà un compte ?</span>
+                <a href="{% url 'accounts:login' %}" class="text-decoration-none fw-semibold">
+                    Se connecter
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('id_password')?.addEventListener('input', function() {
+    const pwd = this.value;
+    let score = 0;
+    if (pwd.length >= 8)          score++;
+    if (/[A-Z]/.test(pwd))        score++;
+    if (/[a-z]/.test(pwd))        score++;
+    if (/[0-9]/.test(pwd))        score++;
+    if (/[^A-Za-z0-9]/.test(pwd)) score++;
+
+    const bar  = document.getElementById('pwd-strength-bar');
+    const text = document.getElementById('pwd-strength-text');
+    const levels = [
+        { w: '0%',   c: 'bg-danger',  t: '' },
+        { w: '20%',  c: 'bg-danger',  t: 'Très faible' },
+        { w: '40%',  c: 'bg-warning', t: 'Faible' },
+        { w: '60%',  c: 'bg-info',    t: 'Moyen' },
+        { w: '80%',  c: 'bg-primary', t: 'Fort' },
+        { w: '100%', c: 'bg-success', t: 'Très fort' },
+    ];
+    const level = levels[score];
+    bar.style.width  = level.w;
+    bar.className    = 'password-strength ' + level.c;
+    text.textContent = level.t;
+});
+</script>
 {% endblock %}
